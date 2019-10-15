@@ -22,10 +22,6 @@ const IS_PROD = process.env.NODE_ENV === 'production';
 app.set('view engine', 'pug');
 app.set('trust proxy');
 
-app.get("/", (_, res) => {
-    res.render("final", {name: "Test"});
-});
-
 app.use(cookieSession({
     name: 'session',
     secret: process.env.COOKIE_SECRET,
