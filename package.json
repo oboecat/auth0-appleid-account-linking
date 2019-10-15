@@ -26,15 +26,15 @@
     "express-openid-connect": "^0.3.0",
     "express-session": "^1.16.2",
     "pug": "^2.0.4",
-    "useragent": "^2.3.0"
+    "useragent": "^2.3.0",
+    "@babel/runtime": "^7.4.5",
+    "nodemon": "^1.19.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4",
-    "@babel/runtime": "^7.4.5",
-    "nodemon": "^1.19.1"
+    "@babel/register": "^7.4.4"
   }
 }
