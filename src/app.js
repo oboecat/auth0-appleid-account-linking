@@ -155,17 +155,19 @@ app.get("/connect/done", ensureAuthState, async (req, res) => {
 
     const [secondaryConnectionId, ...rest] = secondaryUserId.split('|');
     const secondaryUserProviderId = rest.join('|');
-
-    await management.linkUsers(primaryUserId, {
-        user_id: secondaryUserProviderId,
-        provider: secondaryConnectionId
-    });
-
-    res.render('final', {
-        primaryUser: primaryUserId,
-        secondaryUser: secondaryUserId,
-    });
-
+    try {
+        await management.linkUsers(primaryUserId, {
+            user_id: secondaryUserProviderId,
+            provider: secondaryConnectionId
+        });
+    
+        res.render('final', {
+            primaryUser: primaryUserId,
+            secondaryUser: secondaryUserId,
+        });    
+    } catch (e) {
+        next(e);
+    }
 });
 
 app.get("/connect/skip", ensureAuthState, (req, res) => {
