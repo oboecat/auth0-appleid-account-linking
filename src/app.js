@@ -171,6 +171,11 @@ app.get("/connect/done", ensureAuthState, async (req, res) => {
 });
 
 app.get("/connect/skip", ensureAuthState, (req, res) => {
+    /**
+     * await manage.updateUserMetadata(req.openid.user.sub, {
+     *    skippedConnecting: true
+     * });
+     */
     res.redirect("/continue");
 });
 

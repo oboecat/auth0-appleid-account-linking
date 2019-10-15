@@ -3,15 +3,16 @@ extends layout.pug
 block card
     div(class="card-body")
         h5(class="card-title") Hi #{name},
-        p(class="card-text").
-            Looks like this is your first time signing 
-            in with apple. If you already have an account 
-            with us, you can connect it. 
-        p(class="card-text").
-            Altenatively, you can connect your Google Account 
-            to convienently login on all devices using your Google Account
+        if loginsCount < 2
+            p(class="card-text").
+                Looks like this is your first time signing 
+                in with your Apple account. If you already have an account 
+                with us, connect it by signing in below.
+        else 
+            p(class="card-text").
+                To improve account security, connect your Google account.
         hr 
         div
-            a(href="/connect/google-oauth2", class="btn btn-primary w-100") Connect Google Account
+            a(href="/connect/google-oauth2", class="btn btn-primary w-100") Continue with Google
         div
-            a(href="/continue", class="btn btn-link w-100") Skip Connecting Google
+            a(href="/continue", class="btn btn-link w-100") Not now
