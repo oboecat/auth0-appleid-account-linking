@@ -1,0 +1,17 @@
+extends layout.pug
+
+block card
+    div(class="card-body")
+        h5(class="card-title") Hi #{name},
+        p(class="card-text").
+            Looks like this is your first time signing 
+            in with apple. If you already have an account 
+            with us, you can connect it. 
+        p(class="card-text").
+            Altenatively, you can connect your Google Account 
+            to convienently login on all devices using your Google Account
+        hr 
+        div
+            a(href="/connect/google-oauth2", class="btn btn-primary w-100") Connect Google Account
+        div
+            a(href="/continue", class="btn btn-link w-100") Skip Connecting Google
