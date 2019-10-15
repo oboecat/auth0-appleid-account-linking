@@ -47,8 +47,6 @@ app.use((req, res, next) => {
     const { session } = req;
     const { auth0State } = session;
 
-    console.log("AUTH0 STATE", auth0State);
-
     res.redirectCallback = (queryParams = {}) => {
         queryParams.state = auth0State;
         const queryStr = Object.entries(queryParams)
@@ -111,7 +109,6 @@ app.get("/start", (req, _, next) => {
 
 app.get("/start", (req, res) => {
     const { user } = req.openid;
-    console.log(user);
 
     if (user.provider === 'apple') {
         if (user.loginsCount <= 1) {
