@@ -1,19 +1,23 @@
-function (user, context, callback) {
+function appleIdDecider(user, context, callback) {
     const useragent = require('useragent');
-    context.shouldLink = false;
+    context.shouldPrompt = false;
     
     let agent = useragent.parse(context.request.userAgent);
-    
+
     if (context.connection === 'apple') {
       if (context.stats.loginsCount <= 1) {
-        context.shouldLink = true;
+        context.shouldPrompt = true;
       }
     } else {
-      if (agent.os.family === 'Mac OS X' || agent.os.family === 'iOS') {
-        context.shouldLink = true;
+      const version = parseInt(agent.major, 10);
+      const family = agent.family;
+      // So far only Safari supports this, focus on that
+      if (family === 'Safari' && version >= 13) {
+        if (user.identities.every(({ provider }) => provider !== 'apple')) {
+          context.shouldPrompt = true;
+        }
       }
     }
     
-    console.log("User is linkable?", context.shouldLink);
     callback(null, user, context);
   }

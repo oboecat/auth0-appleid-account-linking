@@ -1,15 +1,40 @@
-function (user, context, callback) {
-    if (context.shouldLink && context.clientID !== configuration.APPLE_LINK_CLIENT_ID) {
-      console.log("Should redirect");
-      context.redirect = {
-        url: configuration.APPLE_LINK_APP_URI
-      };
+function appleIdRedirector(user, context, callback) {
+  function canRedirect(context, selfClientId) {
+    const protocolsThatDontWork = [
+      "redirect-callback",
+      "oauth2-password",
+      "oauth2-refresh-token",
+      "oauth2-resource-owner"
+    ];
+    if (protocolsThatDontWork.includes(context.protocol)) {
+      return false;
     }
-    
-    if (context.clientID === configuration.APPLE_LINK_CLIENT_ID) {
-      // add custom parameters
-      context.idToken[configuration.NAMESPACE + 'provider'] = context.connection;
-      context.idToken[configuration.NAMESPACE + 'loginsCount'] = context.stats.loginsCount;
+
+    const { response_mode: responseMode } = context.request.query || {};
+    const responseModeThatDontWork = ["web_message"];
+
+    if (responseModeThatDontWork.includes(responseMode)) {
+      return false;
     }
-    return callback(null, user, context);
+
+    // Prevent Redirect Loop
+    if (context.clientID === selfClientId) {
+      return false;
+    }
+    return true;
   }
+
+  if (!canRedirect(context, configuration.APPLE_LINK_CLIENT_ID)) {
+    callback(null, user, context);
+    return;
+  }
+
+  if (context.shouldPrompt) {
+    console.log("Should redirect");
+    context.redirect = {
+      url: configuration.APPLE_LINK_APP_URI
+    };
+  }
+
+  return callback(null, user, context);
+}
