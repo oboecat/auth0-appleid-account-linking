@@ -22,7 +22,7 @@
     "bootstrap": "^4.4.1",
     "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-openid-connect": "^0.6.0",
     "nodemon": "^1.19.4",
     "pug": "^2.0.4",
